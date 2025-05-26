@@ -4,6 +4,8 @@ import { AsciiAnimation } from '../utils/asciiAnimation';
 const AsciiBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<AsciiAnimation | null>(null);
+  const lastWidth = useRef<number>(window.innerWidth);
+  const lastHeight = useRef<number>(window.innerHeight);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -12,17 +14,23 @@ const AsciiBackground: React.FC = () => {
     animationRef.current = new AsciiAnimation(canvasRef.current);
     animationRef.current.start();
 
-    // Handle resize with debounce
+    // Handle resize with debounce and size check
     let resizeTimeout: number;
     const handleResize = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = window.setTimeout(() => {
-        if (animationRef.current) {
-          animationRef.current.stop();
-          animationRef.current = new AsciiAnimation(canvasRef.current!);
-          animationRef.current.start();
-        }
-      }, 250); // Debounce resize events
+      // Only trigger if actual window dimensions changed
+      if (window.innerWidth !== lastWidth.current || window.innerHeight !== lastHeight.current) {
+        lastWidth.current = window.innerWidth;
+        lastHeight.current = window.innerHeight;
+        
+        clearTimeout(resizeTimeout);
+        resizeTimeout = window.setTimeout(() => {
+          if (animationRef.current) {
+            animationRef.current.stop();
+            animationRef.current = new AsciiAnimation(canvasRef.current!);
+            animationRef.current.start();
+          }
+        }, 250); // Debounce resize events
+      }
     };
 
     window.addEventListener('resize', handleResize);
