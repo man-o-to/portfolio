@@ -136,7 +136,7 @@ const About = forwardRef<HTMLElement, {}>((_, ref) => {
   }, []);
 
   return (
-    <section ref={ref} className="py-20 bg-[#051533] text-[#779bce] font-mono">
+    <section ref={ref} className="py-20 bg-[#051533] text-[#779bce] font-mono overflow-hidden">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="mb-12">
           <div className="flex items-center space-x-2">
@@ -185,7 +185,7 @@ const About = forwardRef<HTMLElement, {}>((_, ref) => {
                       <span className="text-white">$</span>
                       <span className="text-[#779bce]">cd</span>
                       <span className="text-white">/</span>
-                      <h3 className="text-xl font-bold tracking-wider">{exp.company}</h3>
+                      <h3 className="text-xl font-bold tracking-wider leading-tight break-words whitespace-normal">{exp.company}</h3>
                     </div>
                     <p className="text-sm opacity-80 tracking-wide">{exp.location}</p>
                     <p className="text-sm opacity-80 tracking-wide">{exp.period}</p>

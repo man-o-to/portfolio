@@ -12,8 +12,8 @@ function App() {
   const techStackRef = useRef<HTMLElement>(null);
 
   return (
-    <div className="relative">
-      <main>
+    <div className="relative overflow-x-hidden w-full">
+      <main className="w-full">
         <Hero 
           aboutRef={aboutRef}
           projectsRef={projectsRef}

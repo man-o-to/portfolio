@@ -147,7 +147,7 @@ const TechStack = forwardRef<HTMLElement, {}>((_, ref) => {
   };
 
   return (
-    <section ref={ref} className="py-20 bg-[#051533] text-[#779bce] font-mono">
+    <section ref={ref} className="py-20 bg-[#051533] text-[#779bce] font-mono overflow-x-hidden">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="mb-12">
           <div className="flex items-center space-x-2">
@@ -180,7 +180,7 @@ const TechStack = forwardRef<HTMLElement, {}>((_, ref) => {
                 <span className="text-white">$</span>
                 <span className="text-[#779bce]">cd</span>
                 <span className="text-white">/</span>
-                <h3 className="text-xl font-bold tracking-wider text-white group-hover:text-white">
+                <h3 className="text-base md:text-xl font-bold tracking-wider text-white group-hover:text-white truncate">
                   {category.title}
                 </h3>
               </button>

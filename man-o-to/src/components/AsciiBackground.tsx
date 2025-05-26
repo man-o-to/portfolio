@@ -12,13 +12,17 @@ const AsciiBackground: React.FC = () => {
     animationRef.current = new AsciiAnimation(canvasRef.current);
     animationRef.current.start();
 
-    // Handle resize
+    // Handle resize with debounce
+    let resizeTimeout: number;
     const handleResize = () => {
-      if (animationRef.current) {
-        animationRef.current.stop();
-        animationRef.current = new AsciiAnimation(canvasRef.current!);
-        animationRef.current.start();
-      }
+      clearTimeout(resizeTimeout);
+      resizeTimeout = window.setTimeout(() => {
+        if (animationRef.current) {
+          animationRef.current.stop();
+          animationRef.current = new AsciiAnimation(canvasRef.current!);
+          animationRef.current.start();
+        }
+      }, 250); // Debounce resize events
     };
 
     window.addEventListener('resize', handleResize);
@@ -26,6 +30,7 @@ const AsciiBackground: React.FC = () => {
     // Cleanup
     return () => {
       window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimeout);
       if (animationRef.current) {
         animationRef.current.stop();
       }
@@ -36,6 +41,7 @@ const AsciiBackground: React.FC = () => {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full -z-10 pointer-events-none"
+      style={{ transform: 'translate3d(0, 0, 0)' }}
     />
   );
 };

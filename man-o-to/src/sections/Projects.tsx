@@ -116,7 +116,7 @@ const Projects = forwardRef<HTMLElement, {}>((_, ref) => {
   };
 
   return (
-    <section ref={ref} className="py-20 bg-[#051533] text-[#779bce] font-mono">
+    <section ref={ref} className="py-20 bg-[#051533] text-[#779bce] font-mono overflow-hidden">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="mb-12">
           <div className="flex items-center space-x-2">

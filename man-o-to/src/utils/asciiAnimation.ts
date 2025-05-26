@@ -37,8 +37,9 @@ export class AsciiAnimation {
     const cols = Math.floor(width / charWidth);
     const rows = Math.floor(height / charHeight);
     
-    this.logoStartCol = Math.floor((cols - logoWidth) / 2);
-    this.logoStartRow = Math.floor((rows - logoHeight) / 2);
+    // Ensure perfect centering by rounding to nearest pixel
+    this.logoStartCol = Math.round((cols - logoWidth) / 2);
+    this.logoStartRow = Math.round((rows - logoHeight) / 2);
   }
 
   private getAsciiChar(brightness: number): string {
@@ -47,9 +48,9 @@ export class AsciiAnimation {
   }
 
   private getSpiralProgress(x: number, y: number, elapsed: number): number {
-    // Convert coordinates to polar
-    const centerX = this.canvas.width / 2;
-    const centerY = this.canvas.height / 2;
+    // Convert coordinates to polar with precise centering
+    const centerX = Math.round(this.canvas.width / 2);
+    const centerY = Math.round(this.canvas.height / 2);
     const dx = x - centerX;
     const dy = y - centerY;
     const distance = Math.sqrt(dx * dx + dy * dy);
