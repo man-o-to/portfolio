@@ -16,12 +16,23 @@ export class AsciiAnimation {
   private logoTransitionDuration: number = 2000; // 2 seconds transition
   private backgroundRevealDuration: number = 3000; // 3 seconds for background reveal
   private backgroundFillDuration: number = 2000; // 2 seconds to fill remaining space
+  private isMobile: boolean;
+  private charWidth: number;
+  private charHeight: number;
+  private frameCount: number = 0;
+  private readonly MOBILE_FRAME_SKIP = 2; // Skip every 2nd frame on mobile
 
-  constructor(canvas: HTMLCanvasElement) {
+  constructor(canvas: HTMLCanvasElement, isMobile: boolean = false) {
     this.canvas = canvas;
-    const context = canvas.getContext('2d');
+    this.isMobile = isMobile;
+    const context = canvas.getContext('2d', { alpha: false });
     if (!context) throw new Error('Could not get canvas context');
     this.ctx = context;
+    
+    // Adjust character size for mobile
+    this.charWidth = isMobile ? 8 : 12;
+    this.charHeight = isMobile ? 16 : 20;
+    
     this.resize();
   }
 
@@ -32,10 +43,8 @@ export class AsciiAnimation {
     
     // Calculate logo position (centered)
     const { width: logoWidth, height: logoHeight } = getLogoBounds();
-    const charWidth = 12;
-    const charHeight = 20;
-    const cols = Math.floor(width / charWidth);
-    const rows = Math.floor(height / charHeight);
+    const cols = Math.floor(width / this.charWidth);
+    const rows = Math.floor(height / this.charHeight);
     
     // Ensure perfect centering by rounding to nearest pixel
     this.logoStartCol = Math.round((cols - logoWidth) / 2);
@@ -43,8 +52,10 @@ export class AsciiAnimation {
   }
 
   private getAsciiChar(brightness: number): string {
-    const index = Math.floor(lerp(0, ASCII_CHARS.length - 1, brightness));
-    return ASCII_CHARS[clamp(index, 0, ASCII_CHARS.length - 1)];
+    // Use fewer characters on mobile for better performance
+    const chars = this.isMobile ? ASCII_CHARS.slice(0, 20) : ASCII_CHARS;
+    const index = Math.floor(lerp(0, chars.length - 1, brightness));
+    return chars[clamp(index, 0, chars.length - 1)];
   }
 
   private getSpiralProgress(x: number, y: number, elapsed: number): number {
@@ -73,6 +84,15 @@ export class AsciiAnimation {
   }
 
   private drawFrame(timestamp: number) {
+    // Skip frames on mobile for better performance
+    if (this.isMobile) {
+      this.frameCount++;
+      if (this.frameCount % this.MOBILE_FRAME_SKIP !== 0) {
+        this.animationFrameId = requestAnimationFrame(this.drawFrame.bind(this));
+        return;
+      }
+    }
+
     if (!this.startTime) this.startTime = timestamp;
     if (!this.lastFrameTime) this.lastFrameTime = timestamp;
     if (!this.logoTransitionStart) this.logoTransitionStart = timestamp;
@@ -91,13 +111,11 @@ export class AsciiAnimation {
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     // Calculate grid size based on canvas dimensions
-    const charWidth = 12;
-    const charHeight = 20;
-    const cols = Math.floor(this.canvas.width / charWidth);
-    const rows = Math.floor(this.canvas.height / charHeight);
+    const cols = Math.floor(this.canvas.width / this.charWidth);
+    const rows = Math.floor(this.canvas.height / this.charHeight);
 
     // Set text properties for background
-    this.ctx.font = `${charHeight * 0.6}px monospace`;
+    this.ctx.font = `${this.charHeight * 0.6}px monospace`;
 
     // Draw ASCII characters
     for (let row = 0; row < rows; row++) {
@@ -106,16 +124,16 @@ export class AsciiAnimation {
         const logoChar = getLogoChar(col, row, this.logoStartCol, this.logoStartRow, logoProgress);
         if (logoChar) {
           this.ctx.fillStyle = '#ffffff'; // White for logo
-          this.ctx.font = `900 ${charHeight}px monospace`; // Increased font size and weight for logo
-          this.ctx.fillText(logoChar, col * charWidth, row * charHeight);
+          this.ctx.font = `900 ${this.charHeight}px monospace`; // Increased font size and weight for logo
+          this.ctx.fillText(logoChar, col * this.charWidth, row * this.charHeight);
           // Reset font for background
-          this.ctx.font = `${charHeight * 0.6}px monospace`;
+          this.ctx.font = `${this.charHeight * 0.6}px monospace`;
           continue;
         }
 
         // Calculate normalized coordinates (-1 to 1)
-        const x = col * charWidth;
-        const y = row * charHeight;
+        const x = col * this.charWidth;
+        const y = row * this.charHeight;
         
         // Get spiral reveal progress for this position
         const revealProgress = this.getSpiralProgress(x, y, elapsed * 1000);
@@ -155,8 +173,8 @@ export class AsciiAnimation {
         // Draw the character
         this.ctx.fillText(
           char,
-          col * charWidth,
-          row * charHeight
+          col * this.charWidth,
+          row * this.charHeight
         );
       }
     }

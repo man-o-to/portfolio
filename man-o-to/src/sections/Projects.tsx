@@ -26,7 +26,7 @@ const projects: Project[] = [
       "Vercel"
     ],
     link: "https://swipebox.ai",
-    github: "https://github.com/man-o-to/swipebox"
+    github: "https://github.com/man-o-to/Swipebox-Release"
   },
   {
     title: "Swipebox Chrome Extension",
@@ -42,7 +42,7 @@ const projects: Project[] = [
       "Cloudflare R2"
     ],
     "link": "https://swipebox.ai",
-    "github": "https://github.com/man-o-to/swipebox-extension"
+    "github": "https://github.com/man-o-to/Swipebox-Chrome-Extension"
   },
   {
     title: "PitchPAL",
