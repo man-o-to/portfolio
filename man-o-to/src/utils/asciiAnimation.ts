@@ -20,7 +20,6 @@ export class AsciiAnimation {
   private charWidth: number;
   private charHeight: number;
   private frameCount: number = 0;
-  private readonly MOBILE_FRAME_SKIP = 2; // Skip every 2nd frame on mobile
 
   constructor(canvas: HTMLCanvasElement, isMobile: boolean = false) {
     this.canvas = canvas;
@@ -30,8 +29,8 @@ export class AsciiAnimation {
     this.ctx = context;
     
     // Adjust character size for mobile
-    this.charWidth = isMobile ? 8 : 12;
-    this.charHeight = isMobile ? 16 : 20;
+    this.charWidth = isMobile ? 6 : 12;
+    this.charHeight = isMobile ? 12 : 20;
     
     this.resize();
   }
@@ -53,7 +52,7 @@ export class AsciiAnimation {
 
   private getAsciiChar(brightness: number): string {
     // Use fewer characters on mobile for better performance
-    const chars = this.isMobile ? ASCII_CHARS.slice(0, 20) : ASCII_CHARS;
+    const chars = this.isMobile ? ASCII_CHARS.slice(0, 10) : ASCII_CHARS;
     const index = Math.floor(lerp(0, chars.length - 1, brightness));
     return chars[clamp(index, 0, chars.length - 1)];
   }
@@ -87,7 +86,7 @@ export class AsciiAnimation {
     // Skip frames on mobile for better performance
     if (this.isMobile) {
       this.frameCount++;
-      if (this.frameCount % this.MOBILE_FRAME_SKIP !== 0) {
+      if (this.frameCount % 3 !== 0) { // Skip 2 out of 3 frames on mobile
         this.animationFrameId = requestAnimationFrame(this.drawFrame.bind(this));
         return;
       }

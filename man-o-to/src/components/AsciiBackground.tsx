@@ -38,11 +38,23 @@ const AsciiBackground: React.FC = () => {
       }
     };
 
-    window.addEventListener('resize', handleResize);
+    // Only listen for actual window resizes, not scroll events
+    let ticking = false;
+    const onResize = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleResize();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('resize', onResize);
 
     // Cleanup
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', onResize);
       clearTimeout(resizeTimeout);
       if (animationRef.current) {
         animationRef.current.stop();
