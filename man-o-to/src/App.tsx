@@ -1,29 +1,14 @@
-import { useRef } from 'react';
-import Hero from './sections/Hero';
-import About from './sections/About';
-import Projects from './sections/Projects';
-import TechStack from './sections/TechStack';
-import Footer from './sections/Footer';
-import './styles/fonts.css';
-
 function App() {
-  const aboutRef = useRef<HTMLElement>(null);
-  const projectsRef = useRef<HTMLElement>(null);
-  const techStackRef = useRef<HTMLElement>(null);
-
   return (
-    <div className="relative overflow-x-hidden w-full">
-      <main className="w-full">
-        <Hero 
-          aboutRef={aboutRef}
-          projectsRef={projectsRef}
-          techStackRef={techStackRef}
-        />
-        <About ref={aboutRef} />
-        <Projects ref={projectsRef} />
-        <TechStack ref={techStackRef} />
+    <div className="min-h-screen bg-gray-50">
+      <main className="container mx-auto px-4 py-8">
+        <h1 className="text-4xl font-bold text-gray-900 text-center">
+          Clean Canvas
+        </h1>
+        <p className="text-gray-600 text-center mt-4">
+          Ready for your revamp!
+        </p>
       </main>
-      <Footer />
     </div>
   );
 }
