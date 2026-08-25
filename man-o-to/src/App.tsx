@@ -1,9 +1,9 @@
+import { ContentTabs } from '@/components/content/ContentTabs'
+import { IdCard } from '@/components/id-card/IdCard'
+import { PortfolioShell } from '@/components/layout/PortfolioShell'
+
 function App() {
-  return (
-    <div className="flex min-h-screen items-center justify-center">
-      <p className="text-muted-foreground">Ready for your revamp.</p>
-    </div>
-  )
+  return <PortfolioShell idCard={<IdCard />} content={<ContentTabs />} />
 }
 
 export default App
