@@ -1,5 +1,5 @@
 import { profile } from '@/data/profile'
-import { AsciiPlayerPlaceholder } from './AsciiPlayerPlaceholder'
+import { AsciiPlayer } from './AsciiPlayer'
 import { SocialLinks } from './SocialLinks'
 import { StatTable } from './StatTable'
 
@@ -19,7 +19,7 @@ export function IdCard() {
         {profile.jobTitle}
       </p>
 
-      <AsciiPlayerPlaceholder />
+      <AsciiPlayer />
 
       <StatTable />
 

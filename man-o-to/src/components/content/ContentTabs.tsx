@@ -19,7 +19,7 @@ export function ContentTabs() {
           <TabsTrigger
             key={tab.value}
             value={tab.value}
-            className="flex-none px-1 text-xs tracking-widest text-muted-foreground uppercase data-active:!bg-foreground data-active:!text-background group-data-[variant=line]/tabs-list:data-active:after:opacity-0"
+            className="flex-none px-1 text-xs tracking-widest text-muted-foreground uppercase"
           >
             {tab.label}
           </TabsTrigger>
