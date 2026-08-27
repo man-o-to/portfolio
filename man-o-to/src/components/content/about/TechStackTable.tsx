@@ -63,8 +63,10 @@ export function TechStackTable() {
   }
 
   return (
-    <Table>
-      <TableHeader className="[&_tr]:!border-b-0">
+    <Table
+      containerClassName="themed-scroll max-h-[28rem] min-w-0 overflow-auto rounded-md border border-border/50"
+    >
+      <TableHeader className="sticky top-0 z-10 bg-background [&_tr]:!border-b">
         <TableRow className="hover:bg-transparent">
           {columns.map((column) => (
             <TableHead
