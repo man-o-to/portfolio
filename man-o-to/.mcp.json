@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "ascii-motion": {
+      "command": "npx",
+      "args": ["-y", "ascii-motion-mcp", "--project-dir", "./.ascii-motion-projects"]
+    }
+  }
+}

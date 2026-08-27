@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# ascii-motion-mcp working files (raw editor projects, not the exported output we embed)
+.ascii-motion-projects
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
