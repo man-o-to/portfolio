@@ -2,15 +2,15 @@ import { Button } from '@/components/ui/button'
 import { profile } from '@/data/profile'
 
 const links = [
-  { label: '[GitHub]', href: profile.socials.github, external: true },
+  { label: '[GitHub — Personal]', href: profile.socials.githubPersonal, external: true },
+  { label: '[GitHub — Work]', href: profile.socials.githubWork, external: true },
   { label: '[LinkedIn]', href: profile.socials.linkedin, external: true },
-  { label: '[Telegram]', href: profile.socials.telegram, external: true },
   { label: '[Email]', href: `mailto:${profile.email}`, external: false },
 ]
 
 export function SocialLinks() {
   return (
-    <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs tracking-widest uppercase">
+    <div className="flex flex-col items-start gap-1 text-xs tracking-widest uppercase">
       {links.map(({ label, href, external }) => (
         <Button
           key={label}

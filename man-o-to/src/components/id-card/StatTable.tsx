@@ -4,7 +4,6 @@ const rows: { label: string; value: string }[] = [
   { label: '[Name]', value: profile.name },
   { label: '[Job Title]', value: profile.jobTitle },
   { label: '[Email]', value: profile.email },
-  { label: '[Birthday]', value: profile.birthday },
   { label: '[Location]', value: profile.location },
 ]
 

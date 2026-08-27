@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { projects } from '@/data/projects'
+import { flattenStack, projects } from '@/data/projects'
 import { ProjectCard } from './ProjectCard'
 import { ProjectFilterBar, type SortKey } from './ProjectFilterBar'
 
@@ -8,7 +8,7 @@ export function ProjectsTab() {
   const [sortKey, setSortKey] = useState<SortKey>('newest')
 
   const allTags = useMemo(
-    () => Array.from(new Set(projects.flatMap((project) => project.tags))),
+    () => Array.from(new Set(projects.flatMap((project) => flattenStack(project.stack)))),
     [],
   )
 
@@ -17,7 +17,7 @@ export function ProjectsTab() {
       activeTags.length === 0
         ? projects
         : projects.filter((project) =>
-            project.tags.some((tag) => activeTags.includes(tag)),
+            flattenStack(project.stack).some((tag) => activeTags.includes(tag)),
           )
 
     return [...filtered].sort((a, b) => {

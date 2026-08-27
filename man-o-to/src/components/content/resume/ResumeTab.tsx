@@ -21,10 +21,20 @@ function ResumeSection({
                 {entry.title} — {entry.org}
               </span>
               <span className="text-xs text-muted-foreground uppercase">
-                {entry.period}
+                {entry.period} · {entry.location}
               </span>
             </div>
-            <p className="text-sm text-muted-foreground">{entry.description}</p>
+            <ul className="flex flex-col gap-1">
+              {entry.description.map((line) => (
+                <li
+                  key={line}
+                  className="text-justify text-sm text-muted-foreground [text-justify:inter-word]"
+                >
+                  <span className="mr-2 text-muted-foreground">■</span>
+                  {line}
+                </li>
+              ))}
+            </ul>
           </div>
         ))}
       </div>
@@ -37,7 +47,6 @@ export function ResumeTab() {
     <div className="flex flex-col gap-6 py-6">
       <div className="flex items-center justify-between gap-4">
         <p className="max-w-prose leading-relaxed">{resume.summary}</p>
-        {/* TODO: add a real PDF at public/resume.pdf for this link to resolve */}
         <Button
           variant="link"
           className="h-auto w-auto shrink-0 rounded-none p-0 text-xs tracking-widest text-foreground uppercase"
@@ -54,7 +63,14 @@ export function ResumeTab() {
         <Separator />
         <section className="flex flex-col gap-2">
           <SectionHeading>Skills</SectionHeading>
-          <p>{resume.skills.join(' / ')}</p>
+          <div className="flex flex-col gap-1">
+            {resume.skills.map((group) => (
+              <p key={group.category} className="text-sm">
+                <span className="text-muted-foreground uppercase">{group.category}: </span>
+                {group.items.join(' / ')}
+              </p>
+            ))}
+          </div>
         </section>
       </div>
     </div>
