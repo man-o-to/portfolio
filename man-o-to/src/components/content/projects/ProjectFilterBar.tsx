@@ -55,7 +55,7 @@ export function ProjectFilterBar({
             onClick={() => onSortChange(option.value)}
             className={cn(
               'px-1 text-muted-foreground hover:text-foreground',
-              sortKey === option.value && 'bg-foreground text-background',
+              sortKey === option.value && 'bg-foreground text-background hover:text-background',
             )}
           >
             [{option.label}]
